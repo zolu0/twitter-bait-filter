@@ -21,10 +21,17 @@ Instead, those tweets are replaced with:
 
 ---
 
-## 🚀 Install
+## 📦 Install
 
-### 🔴 GreasyFork (auto updates)
-[![Install from GreasyFork](https://img.shields.io/badge/Install--Now-GreasyFork-red?style=for-the-badge&logo=greasyfork)](https://greasyfork.org/en/scripts/535056-twitter-bait-filter)
+To use this script, install one of the following browser extensions:
+
+- [Tampermonkey](https://www.tampermonkey.net/) (Recommended – Chrome, Firefox, Edge)
+- [Violentmonkey](https://violentmonkey.github.io/) (Open source alternative)
+
+Once installed, you can click the **GreasyFork install button** or use the GitHub direct link below.
+
+---
+
 
 ### 🟢 Direct from GitHub (manual install, auto-updates via Tampermonkey)
 
