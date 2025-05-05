@@ -28,6 +28,8 @@ To use this script, install one of the following browser extensions:
 - [Tampermonkey](https://www.tampermonkey.net/) (Recommended – Chrome, Firefox, Edge)
 - [Violentmonkey](https://violentmonkey.github.io/) (Open source alternative)
 
+
+
 Once installed, you can:
 
 - 🔴 [Install via GreasyFork](https://greasyfork.org/en/scripts/535056-twitter-bait-filter)
