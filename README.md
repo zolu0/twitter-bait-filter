@@ -5,9 +5,6 @@
 
 Blocks low-effort, NSFW, and engagement-farming “A Thread” posts on Twitter/X.
 
-
-Blocks low-effort, NSFW, and engagement-farming “A Thread” posts on Twitter/X.
-
 **No more:**  
 - "say hi" thirst traps  
 - AI model bait  
