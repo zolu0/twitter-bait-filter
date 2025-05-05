@@ -29,7 +29,7 @@ To use this script, install one of the following browser extensions:
 
 Once installed, you can:
 
-- 🔴 [🔴 Install via GreasyFork ⚡ *(auto-updates)*](https://greasyfork.org/en/scripts/535056-twitter-bait-filter)
+- 🔴 [Install via GreasyFork ⚡ *(auto-updates)*](https://greasyfork.org/en/scripts/535056-twitter-bait-filter)
 - 🟢 [Install directly from GitHub](https://github.com/nabil647/twitter-bait-filter/raw/main/twitter-bait-filter.user.js)
 
 ---
