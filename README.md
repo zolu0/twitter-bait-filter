@@ -1,7 +1,5 @@
 # 🧹 Twitter Bait Filter
 
-# 🧹 Twitter Bait Filter
-
 [![GreasyFork Version](https://img.shields.io/badge/GreasyFork-2.0-red?logo=greasyfork)](https://greasyfork.org/en/scripts/535056-twitter-bait-filter)
 [![GitHub Version](https://img.shields.io/badge/version-2.0-blue)](https://github.com/nabil647/twitter-bait-filter)
 
