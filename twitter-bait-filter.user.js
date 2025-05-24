@@ -1,15 +1,15 @@
 // ==UserScript==
 // @name         Twitter Bait Filter
-// @namespace    https://github.com/nabil647/twitter-bait-filter
-// @version      2.0
+// @namespace    https://github.com/zolu647/twitter-bait-filter
+// @version      2.1
 // @description  Blocks bait threads on Twitter/X using Unicode, media, and keyword heuristics. Replaces with placeholder.
-// @author       nabil647
+// @author       zolu647
 // @license      MIT
 // @match        https://twitter.com/*
 // @match        https://x.com/*
 // @grant        none
-// @updateURL    https://raw.githubusercontent.com/nabil647/twitter-bait-filter/main/twitter-bait-filter.user.js
-// @downloadURL  https://raw.githubusercontent.com/nabil647/twitter-bait-filter/main/twitter-bait-filter.user.js
+// @updateURL    https://raw.githubusercontent.com/zolu647/twitter-bait-filter/main/twitter-bait-filter.user.js
+// @downloadURL  https://raw.githubusercontent.com/zolu647/twitter-bait-filter/main/twitter-bait-filter.user.js
 // ==/UserScript==
 
 (function () {
