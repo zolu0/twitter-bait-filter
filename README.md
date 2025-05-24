@@ -1,5 +1,8 @@
 # 🧹 Twitter Bait Filter
 
+[![GreasyFork Version](https://img.shields.io/badge/GreasyFork-2.0-red?logo=greasyfork)](https://greasyfork.org/en/scripts/535056-twitter-bait-filter)
+[![GitHub Version](https://img.shields.io/badge/version-2.0-blue)](https://github.com/nabil647/twitter-bait-filter)
+
 Blocks low-effort, NSFW, and engagement-farming “A Thread” posts on Twitter/X.
 
 **No more:**  
@@ -15,15 +18,19 @@ Instead, those tweets are replaced with:
 
 ---
 
-## 🚀 Install
+## 📦 Install
 
-### 🔴 GreasyFork (auto updates)
-[![Install from GreasyFork](https://img.shields.io/badge/Install--Now-GreasyFork-red?style=for-the-badge&logo=greasyfork)](https://greasyfork.org/en/scripts/535056-twitter-bait-filter)
+To use this script, install one of the following browser extensions:
 
-### 🟢 Direct from GitHub (manual install, auto-updates via Tampermonkey)
+- [Tampermonkey](https://www.tampermonkey.net/) (Recommended – Chrome, Firefox, Edge)
+- [Violentmonkey](https://violentmonkey.github.io/) (Open source alternative)
 
-https://github.com/nabil647/twitter-bait-filter/raw/main/twitter-bait-filter.user.js
 
+
+Once installed, you can:
+
+- 🔴 [Install via GreasyFork ⚡ *(auto-updates)*](https://greasyfork.org/en/scripts/535056-twitter-bait-filter)
+- 🟢 [Install directly from GitHub](https://github.com/nabil647/twitter-bait-filter/raw/main/twitter-bait-filter.user.js)
 
 ---
 
