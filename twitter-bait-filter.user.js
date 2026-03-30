@@ -32,6 +32,7 @@
     'booty thread',
     'porn thread',
     'booty',
+    'show more',
   ];
 
   const ENGAGEMENT_BAIT_KEYWORDS = [
