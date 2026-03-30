@@ -145,7 +145,7 @@
     debounceTimer = setTimeout(processTweets, 200);
   });
 
-  console.log('Twitter Bait Filter v2.3 loaded');
+  console.log('Twitter Bait Filter loaded');
   processTweets();
   observer.observe(document.documentElement, {
     childList: true,
