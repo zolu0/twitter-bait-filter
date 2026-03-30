@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Twitter Bait Filter
-// @namespace    https://github.com/zolu647/twitter-bait-filter
+// @namespace    https://github.com/zolu0/twitter-bait-filter
 // @version      2.1
 // @description  Blocks bait threads on Twitter/X using Unicode, media, and keyword heuristics. Replaces with placeholder.
 // @author       zolu647
@@ -49,7 +49,7 @@
     'chelsea',
   ];
 
-  const EMOJI_REGEX = /[\u231A-\uD83E\uDDFF]/g;
+  const EMOJI_REGEX = /\p{Emoji}/gu;
   const THREAD_REGEX = /\bthread\b/i;
 
   const normalizeText = (input) =>
@@ -61,18 +61,16 @@
 
   const isTweetBait = (rawText, tweet) => {
     const text = normalizeText(rawText);
-    const hasMedia = tweet.querySelector('img, video') !== null;
+    const hasMedia = tweet.querySelector('img, video, [data-testid="tweetPhoto"], [data-testid="videoPlayer"]') !== null;
     const hasThread = THREAD_REGEX.test(text);
     const hasBaitText = BAIT_KEYWORDS.some((k) => text.includes(k));
     const isWhitelisted = WHITELIST_KEYWORDS.some((k) => text.includes(k));
-    const emojiCount = (text.match(EMOJI_REGEX) || []).length;
+    // Count emojis on rawText before normalization strips them
+    const emojiCount = (rawText.match(EMOJI_REGEX) || []).length;
     const hasTooManyEmojis = emojiCount >= 5;
 
-    return (
-      hasThread &&
-      hasMedia &&
-      (hasBaitText || hasTooManyEmojis || !isWhitelisted)
-    );
+    if (isWhitelisted) return false;
+    return hasThread && hasMedia && (hasBaitText || hasTooManyEmojis);
   };
 
   const processTweets = () => {
@@ -81,7 +79,7 @@
       if (isTweetBait(rawText, tweet)) {
         console.log(
           '🛑 Blocked tweet:',
-          rawText.slice(0, 150).replace(/\n/g, ' ')
+          rawText.slice(0, 150).replace(/\n/g, ' '),
         );
 
         tweet.innerHTML = `
@@ -109,7 +107,7 @@
   });
 
   window.addEventListener('load', () => {
-    console.log('✅ Twitter Bait Filter v1.9 loaded');
+    console.log('✅ Twitter Bait Filter v2.1 loaded');
     processTweets();
     observer.observe(document.body, { childList: true, subtree: true });
   });
