@@ -3,13 +3,13 @@
 // @namespace    https://github.com/zolu0/twitter-bait-filter
 // @version      2.2
 // @description  Blocks bait threads on Twitter/X using Unicode, media, and keyword heuristics. Replaces with placeholder.
-// @author       zolu647
+// @author       zolu0
 // @license      MIT
 // @match        https://twitter.com/*
 // @match        https://x.com/*
 // @grant        none
-// @updateURL    https://raw.githubusercontent.com/zolu647/twitter-bait-filter/main/twitter-bait-filter.user.js
-// @downloadURL  https://raw.githubusercontent.com/zolu647/twitter-bait-filter/main/twitter-bait-filter.user.js
+// @updateURL    https://raw.githubusercontent.com/zolu0/twitter-bait-filter/main/twitter-bait-filter.user.js
+// @downloadURL  https://raw.githubusercontent.com/zolu0/twitter-bait-filter/main/twitter-bait-filter.user.js
 // ==/UserScript==
 
 (function () {
