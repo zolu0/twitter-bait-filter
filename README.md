@@ -1,10 +1,11 @@
 # Twitter Bait Filter
 
-![version](https://img.shields.io/badge/version-2.3-blue)
+![version](https://img.shields.io/badge/version-2.7-blue)
 
 Blocks low-effort, NSFW, and engagement-farming posts on Twitter/X and replaces them with a placeholder.
 
 **Catches:**
+
 - Explicit content (porn, nsfw, nude, onlyfans)
 - Bait media posts (hot scenes, body count, booty, etc.)
 - Engagement farming with emojis ("say hi", "nobody notices me", etc.)
