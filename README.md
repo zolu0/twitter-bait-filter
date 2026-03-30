@@ -1,62 +1,48 @@
-# 🧹 Twitter Bait Filter
+# Twitter Bait Filter
 
-[![GreasyFork Version](https://img.shields.io/badge/GreasyFork-2.0-red?logo=greasyfork)](https://greasyfork.org/en/scripts/535056-twitter-bait-filter)
-[![GitHub Version](https://img.shields.io/badge/version-2.0-blue)](https://github.com/nabil647/twitter-bait-filter)
+![version](https://img.shields.io/badge/version-2.3-blue)
 
-Blocks low-effort, NSFW, and engagement-farming “A Thread” posts on Twitter/X.
+Blocks low-effort, NSFW, and engagement-farming posts on Twitter/X and replaces them with a placeholder.
 
-**No more:**  
-- "say hi" thirst traps  
-- AI model bait  
-- Unicode-obfuscated `𝘁𝗵𝗿𝘦𝗮𝗱` spam  
-- Emotional clickbait like “no one notices me 😢”  
-- Obvious NSFW/porn-style media threads  
-
-Instead, those tweets are replaced with:
-
-> 🚫 Blocked Tweet (Media or Text Bait Detected)
+**Catches:**
+- Explicit content (porn, nsfw, nude, onlyfans)
+- Bait media posts (hot scenes, body count, booty, etc.)
+- Engagement farming with emojis ("say hi", "nobody notices me", etc.)
 
 ---
 
-## 📦 Install
+## Install
 
-To use this script, install one of the following browser extensions:
+You'll need one of these browser extensions first:
 
-- [Tampermonkey](https://www.tampermonkey.net/) (Recommended – Chrome, Firefox, Edge)
-- [Violentmonkey](https://violentmonkey.github.io/) (Open source alternative)
+- [Tampermonkey](https://www.tampermonkey.net/) (recommended — Chrome, Firefox, Edge)
+- [Violentmonkey](https://violentmonkey.github.io/) (open source alternative)
 
+Then install the script:
 
-
-Once installed, you can:
-
-- 🔴 [Install via GreasyFork ⚡ *(auto-updates)*](https://greasyfork.org/en/scripts/535056-twitter-bait-filter)
-- 🟢 [Install directly from GitHub](https://github.com/nabil647/twitter-bait-filter/raw/main/twitter-bait-filter.user.js)
+- [Install via GreasyFork](https://greasyfork.org/en/scripts/535056-twitter-bait-filter) (auto-updates)
+- [Install from GitHub](https://github.com/zolu0/twitter-bait-filter/raw/main/twitter-bait-filter.user.js)
 
 ---
 
-## 💡 How It Works
+## How It Works
 
-This userscript uses **Unicode normalization**, **emoji detection**, **keyword filtering**, and **media checks** to remove:
+The script scans tweets for three tiers of signals combined with media detection:
 
-- Tweets that mention "thread" (even in obfuscated Unicode)
-- Tweets with embedded images or video + bait text
-- Emotional manipulation tweets like “say hi”, “follow & make my day”
-- NSFW bait like "best scenes", "onlyfans", etc.
+- **Explicit keywords** — blocked immediately if media is present
+- **Bait keywords** — blocked if media is present
+- **Engagement bait keywords** — blocked only if media and 5+ emojis are present
 
-### ✅ Whitelist-Safe
-Legit content like:
-- `soccer thread`, `football news`, `goal highlights`
-...will **still appear** via a smart whitelist.
+Matched tweets are replaced with a red placeholder box.
 
 ---
 
-## 🛠 Customize It
+## Customize
 
-Want to allow or block different content?
-
-Open the script in Tampermonkey and edit:
+Open the script in Tampermonkey and edit the keyword lists at the top:
 
 ```js
+const EXPLICIT_KEYWORDS = [ ... ];
 const BAIT_KEYWORDS = [ ... ];
-const WHITELIST_KEYWORDS = [ ... ];
+const ENGAGEMENT_BAIT_KEYWORDS = [ ... ];
 ```

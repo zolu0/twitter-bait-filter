@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Twitter Bait Filter
 // @namespace    https://github.com/zolu0/twitter-bait-filter
-// @version      2.2
+// @version      2.3
 // @description  Blocks bait threads on Twitter/X using Unicode, media, and keyword heuristics. Replaces with placeholder.
 // @author       zolu0
 // @license      MIT
@@ -15,43 +15,41 @@
 (function () {
   'use strict';
 
-  const BAIT_KEYWORDS = [
-    'game of thrones',
-    'hot scenes',
+  // Always block with media — these are unambiguous
+  const EXPLICIT_KEYWORDS = [
     'nsfw',
     'nude',
+    'porn',
+    'p*rn',
+    'onlyfans',
+    'only fans',
+    'xxx',
+  ];
+
+  // Block with media — bait content but slightly more context-dependent
+  const BAIT_KEYWORDS = [
+    'hot scenes',
     'best scenes',
     'sexiest',
-    'onlyfans',
+    'body count',
+    'booty thread',
+    'porn thread',
+    'booty',
+  ];
+
+  // Only block with media + emojis — too ambiguous on their own
+  const ENGAGEMENT_BAIT_KEYWORDS = [
     'follow and make my day',
+    'make my day',
     'say hi',
     'my birthday',
     "i'm ugly",
     'nobody notices',
     "maybe it's because",
-    'make my day',
     'fuck it',
-    'porn thread',
-    'porn',
-    'p*rn',
-    'booty thread',
-  ];
-
-  const WHITELIST_KEYWORDS = [
-    'soccer',
-    'football',
-    'messi',
-    'ronaldo',
-    'arsenal',
-    'man united',
-    'premier league',
-    'goal',
-    'chelsea',
   ];
 
   const EMOJI_REGEX = /\p{Emoji}/gu;
-  const THREAD_REGEX = /\bthread\b/i;
-
   const normalizeText = (input) =>
     input
       .normalize('NFKD')
@@ -65,15 +63,22 @@
       tweet.querySelector(
         'img, video, [data-testid="tweetPhoto"], [data-testid="videoPlayer"]',
       ) !== null;
-    const hasThread = THREAD_REGEX.test(text);
-    const hasBaitText = BAIT_KEYWORDS.some((k) => text.includes(k));
-    const isWhitelisted = WHITELIST_KEYWORDS.some((k) => text.includes(k));
+
+    if (!hasMedia) return false;
+
     // Count emojis on rawText before normalization strips them
     const emojiCount = (rawText.match(EMOJI_REGEX) || []).length;
     const hasTooManyEmojis = emojiCount >= 5;
 
-    if (isWhitelisted) return false;
-    return hasThread && hasMedia && (hasBaitText || hasTooManyEmojis);
+    if (EXPLICIT_KEYWORDS.some((k) => text.includes(k))) return true;
+    if (BAIT_KEYWORDS.some((k) => text.includes(k))) return true;
+    if (
+      ENGAGEMENT_BAIT_KEYWORDS.some((k) => text.includes(k)) &&
+      hasTooManyEmojis
+    )
+      return true;
+
+    return false;
   };
 
   const processTweets = () => {
@@ -109,9 +114,10 @@
     processTweets();
   });
 
-  window.addEventListener('load', () => {
-    console.log('✅ Twitter Bait Filter v2.2 loaded');
-    processTweets();
-    observer.observe(document.body, { childList: true, subtree: true });
+  console.log('Twitter Bait Filter v2.3 loaded');
+  processTweets();
+  observer.observe(document.documentElement, {
+    childList: true,
+    subtree: true,
   });
 })();
