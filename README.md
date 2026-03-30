@@ -15,7 +15,7 @@ Blocks low-effort, NSFW, and engagement-farming posts on Twitter/X and replaces 
 
 You'll need one of these browser extensions first:
 
-- [Tampermonkey](https://www.tampermonkey.net/) (recommended — Chrome, Firefox, Edge)
+- [Tampermonkey](https://www.tampermonkey.net/) (recommended, Chrome, Firefox, Edge)
 - [Violentmonkey](https://violentmonkey.github.io/) (open source alternative)
 
 Then install the script:
@@ -29,9 +29,9 @@ Then install the script:
 
 The script scans tweets for three tiers of signals combined with media detection:
 
-- **Explicit keywords** — blocked immediately if media is present
-- **Bait keywords** — blocked if media is present
-- **Engagement bait keywords** — blocked only if media and 5+ emojis are present
+- **Explicit keywords**: blocked immediately if media is present
+- **Bait keywords**: blocked if media is present
+- **Engagement bait keywords**: blocked only if media and 5+ emojis are present
 
 Matched tweets are replaced with a red placeholder box.
 

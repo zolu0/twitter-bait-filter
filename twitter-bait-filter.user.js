@@ -15,7 +15,6 @@
 (function () {
   'use strict';
 
-  // Always block with media — these are unambiguous
   const EXPLICIT_KEYWORDS = [
     'nsfw',
     'nude',
@@ -23,10 +22,8 @@
     'p*rn',
     'onlyfans',
     'only fans',
-    'xxx',
   ];
 
-  // Block with media — bait content but slightly more context-dependent
   const BAIT_KEYWORDS = [
     'hot scenes',
     'best scenes',
@@ -37,7 +34,6 @@
     'booty',
   ];
 
-  // Only block with media + emojis — too ambiguous on their own
   const ENGAGEMENT_BAIT_KEYWORDS = [
     'follow and make my day',
     'make my day',
@@ -49,13 +45,19 @@
     'fuck it',
   ];
 
-  const EMOJI_REGEX = /\p{Emoji}/gu;
+  const EMOJI_REGEX = /\p{Extended_Pictographic}/gu;
+
   const normalizeText = (input) =>
     input
       .normalize('NFKD')
-      .replace(/[\u0300-\u036f]/g, '') // remove accents
-      .replace(/[^\x00-\x7F]/g, '') // remove other Unicode
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^\x00-\x7F]/g, '')
       .toLowerCase();
+
+  const getTweetText = (tweet) => {
+    const textEl = tweet.querySelector('[data-testid="tweetText"]');
+    return textEl ? textEl.innerText : '';
+  };
 
   const isTweetBait = (rawText, tweet) => {
     const text = normalizeText(rawText);
@@ -66,52 +68,77 @@
 
     if (!hasMedia) return false;
 
-    // Count emojis on rawText before normalization strips them
     const emojiCount = (rawText.match(EMOJI_REGEX) || []).length;
     const hasTooManyEmojis = emojiCount >= 5;
 
     if (EXPLICIT_KEYWORDS.some((k) => text.includes(k))) return true;
     if (BAIT_KEYWORDS.some((k) => text.includes(k))) return true;
-    if (
-      ENGAGEMENT_BAIT_KEYWORDS.some((k) => text.includes(k)) &&
-      hasTooManyEmojis
-    )
-      return true;
+    if (ENGAGEMENT_BAIT_KEYWORDS.some((k) => text.includes(k)) && hasTooManyEmojis) return true;
 
     return false;
   };
 
+  const blockTweet = (tweet, rawText) => {
+    tweet.dataset.baitFiltered = 'true';
+    console.log('Blocked tweet:', rawText.slice(0, 150).replace(/\n/g, ' '));
+
+    const div = document.createElement('div');
+    div.style.cssText = `
+      padding: 16px;
+      margin: 8px;
+      color: #888;
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 8px;
+      font-family: sans-serif;
+      text-align: center;
+      font-size: 14px;
+    `;
+
+    const label = document.createElement('span');
+    label.textContent = 'Blocked Tweet';
+
+    const btn = document.createElement('button');
+    btn.textContent = 'Show anyway';
+    btn.style.cssText = `
+      margin-left: 12px;
+      background: none;
+      border: 1px solid #555;
+      border-radius: 4px;
+      color: #aaa;
+      font-size: 12px;
+      padding: 2px 8px;
+      cursor: pointer;
+    `;
+    btn.addEventListener('click', () => {
+      tweet.dataset.baitFiltered = 'shown';
+      tweet.innerHTML = '';
+      tweet.appendChild(div.cloneNode(true));
+    });
+
+    div.appendChild(label);
+    div.appendChild(btn);
+    tweet.innerHTML = '';
+    tweet.appendChild(div);
+  };
+
   const processTweets = () => {
     document.querySelectorAll('article').forEach((tweet) => {
-      const rawText = tweet.innerText || '';
-      if (isTweetBait(rawText, tweet)) {
-        console.log(
-          '🛑 Blocked tweet:',
-          rawText.slice(0, 150).replace(/\n/g, ' '),
-        );
+      if (tweet.dataset.baitFiltered) return;
 
-        tweet.innerHTML = `
-                  <div style="
-                      padding: 16px;
-                      margin: 8px;
-                      color: #ff4d4d;
-                      background: #1e1e1e;
-                      border: 1px solid #444;
-                      border-radius: 8px;
-                      font-weight: bold;
-                      font-family: sans-serif;
-                      text-align: center;
-                      font-size: 14px;
-                  ">
-                      🚫 Blocked Tweet (Unicode/Media Bait Detected)
-                  </div>
-              `;
+      const rawText = getTweetText(tweet);
+      if (!rawText) return;
+
+      if (isTweetBait(rawText, tweet)) {
+        blockTweet(tweet, rawText);
       }
     });
   };
 
+  let debounceTimer;
   const observer = new MutationObserver(() => {
-    processTweets();
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(processTweets, 200);
   });
 
   console.log('Twitter Bait Filter v2.3 loaded');
