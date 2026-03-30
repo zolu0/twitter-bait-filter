@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Twitter Bait Filter
 // @namespace    https://github.com/zolu0/twitter-bait-filter
-// @version      2.1
+// @version      2.2
 // @description  Blocks bait threads on Twitter/X using Unicode, media, and keyword heuristics. Replaces with placeholder.
 // @author       zolu647
 // @license      MIT
@@ -61,7 +61,10 @@
 
   const isTweetBait = (rawText, tweet) => {
     const text = normalizeText(rawText);
-    const hasMedia = tweet.querySelector('img, video, [data-testid="tweetPhoto"], [data-testid="videoPlayer"]') !== null;
+    const hasMedia =
+      tweet.querySelector(
+        'img, video, [data-testid="tweetPhoto"], [data-testid="videoPlayer"]',
+      ) !== null;
     const hasThread = THREAD_REGEX.test(text);
     const hasBaitText = BAIT_KEYWORDS.some((k) => text.includes(k));
     const isWhitelisted = WHITELIST_KEYWORDS.some((k) => text.includes(k));
@@ -107,7 +110,7 @@
   });
 
   window.addEventListener('load', () => {
-    console.log('✅ Twitter Bait Filter v2.1 loaded');
+    console.log('✅ Twitter Bait Filter v2.2 loaded');
     processTweets();
     observer.observe(document.body, { childList: true, subtree: true });
   });
