@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Twitter Bait Filter
 // @namespace    https://github.com/zolu0/twitter-bait-filter
-// @version      2.6
+// @version      2.7
 // @description  Blocks bait threads on Twitter/X using Unicode, media, and keyword heuristics. Replaces with placeholder.
 // @author       zolu0
 // @license      MIT
@@ -116,9 +116,24 @@
       padding: 2px 8px;
       cursor: pointer;
     `;
+    const showPlaceholder = () => {
+      tweet.dataset.baitFiltered = 'true';
+      tweet.innerHTML = '';
+      tweet.appendChild(div);
+    };
+
     btn.addEventListener('click', () => {
-      tweet.dataset.baitFiltered = 'shown';
-      tweet.innerHTML = originalHTML;
+      if (tweet.dataset.baitFiltered === 'shown') {
+        showPlaceholder();
+      } else {
+        tweet.dataset.baitFiltered = 'shown';
+        tweet.innerHTML = originalHTML;
+        const hideBtn = document.createElement('button');
+        hideBtn.textContent = 'Hide';
+        hideBtn.style.cssText = btn.style.cssText;
+        hideBtn.addEventListener('click', showPlaceholder);
+        tweet.prepend(hideBtn);
+      }
     });
 
     div.appendChild(label);
