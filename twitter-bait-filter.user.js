@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Twitter Bait Filter
 // @namespace    https://github.com/zolu0/twitter-bait-filter
-// @version      2.3
+// @version      2.4
 // @description  Blocks bait threads on Twitter/X using Unicode, media, and keyword heuristics. Replaces with placeholder.
 // @author       zolu0
 // @license      MIT
@@ -73,7 +73,11 @@
 
     if (EXPLICIT_KEYWORDS.some((k) => text.includes(k))) return true;
     if (BAIT_KEYWORDS.some((k) => text.includes(k))) return true;
-    if (ENGAGEMENT_BAIT_KEYWORDS.some((k) => text.includes(k)) && hasTooManyEmojis) return true;
+    if (
+      ENGAGEMENT_BAIT_KEYWORDS.some((k) => text.includes(k)) &&
+      hasTooManyEmojis
+    )
+      return true;
 
     return false;
   };
